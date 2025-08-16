@@ -10,7 +10,7 @@ const Home = () => {
         className="text-white mt-2 cursor-pointer"
         onClick={() => {
           fetch(
-            "https://5hj4knj9d0.execute-api.us-east-2.amazonaws.com/dev/api/v1/authhhh/register",
+            "https://5hj4knj9d0.execute-api.us-east-2.amazonaws.com/dev/api/v1/auth/register",
             {
               method: "POST",
               headers: {
