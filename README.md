@@ -4,7 +4,7 @@ A modern React TypeScript frontend for the Mastermind game challenge. This clien
 
 ## 🎯 Challenge Overview
 
-This project implements the frontend for the Mastermind game as specified in the LinkedIn Backend Apprentice challenge:
+This project implements the frontend for the Mastermind game as specified in the challenge:
 
 - **Game Interface**: Interactive web-based game board with number input
 - **Attempt Tracking**: Clear indication of remaining attempts
