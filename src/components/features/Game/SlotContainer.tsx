@@ -3,7 +3,7 @@ import Slot from "./Slot";
 
 const SlotContainer: FC<SlotContainerProps> = ({ guesses }) => {
   return (
-    <div className="flex flex-col-reverse w-full border">
+    <div className="relative flex flex-col-reverse space-y-2 w-full">
       {Array.from({ length: 10 }, (_, i) => (
         <Slot
           key={i}

@@ -2,6 +2,7 @@ import type { FC } from "react";
 
 const CodeMaker: FC<CodeMakerProps> = ({ game }) => {
   const { solution, status } = game;
+  console.log(game);
   return (
     <div className="flex flex-col items-center">
       <div className="text-white h-10">

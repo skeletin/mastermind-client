@@ -1,29 +1,50 @@
-import { useState, type ChangeEvent, type FC } from "react";
+import { useContext, useState, type ChangeEvent, type FC } from "react";
 import Digit from "./Digit";
 import { useMutation } from "@tanstack/react-query";
 import GuestGameEndpoints from "../../../endpoints/GuestGameEndpoints";
 import { useQueryClient } from "@tanstack/react-query";
+import GuessEndpoints from "../../../endpoints/GuessEndpoints";
+import useAuth from "../../../hooks/useAuth";
+import GameDataContext from "../../contexts/gameDataContext";
 
 const Slot: FC<SlotProps> = ({ guess, currentGuess, rowNumber }) => {
-  const [value, setState] = useState("");
+  const { authUser } = useAuth();
+  const [value, setValue] = useState("");
   const queryClient = useQueryClient();
+  const { currentGame } = useContext(GameDataContext);
 
-  const { mutate } = useMutation({
+  const loggedIn = !!authUser;
+
+  const { mutate: makeGuess } = useMutation({
     mutationFn: GuestGameEndpoints.makeGuess,
     onSuccess: (data) => {
       console.log(data);
-      queryClient.invalidateQueries({ queryKey: ["game"] });
+      queryClient.invalidateQueries({
+        queryKey: ["game", authUser?.id ?? "guest"],
+      });
     },
   });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setState(e.target.value);
-  };
+  const { mutate: makeAuthGuess } = useMutation({
+    mutationFn: GuessEndpoints.makeGuess,
+    onSuccess: (data) => {
+      console.log(data);
+      queryClient.invalidateQueries({
+        queryKey: ["game", authUser?.id ?? "guest"],
+      });
+    },
+  });
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (value.length === 4 && e.key === "Enter") {
-      console.log("guess");
-      mutate({ value });
+    if (/[0-7]/.test(e.key) && value.length < 4) {
+      setValue((prev) => prev + e.key); // append digit
+    } else if (e.key === "Backspace") {
+      setValue((prev) => prev.slice(0, -1)); // remove last character
+    } else if (e.key === "Enter" && value.length === 4) {
+      if (loggedIn) makeAuthGuess({ value, gameId: currentGame.id });
+      else makeGuess({ value });
+    } else {
+      e.preventDefault(); // block other keys
     }
   };
 
@@ -47,11 +68,11 @@ const Slot: FC<SlotProps> = ({ guess, currentGuess, rowNumber }) => {
       {currentGuess == rowNumber ? (
         <input
           maxLength={4}
-          className="text-white"
+          className="absolute text-black -bottom-10 left-10  text-whit focus:outline-none border border-red-500 cursor-default"
           max={4}
-          onChange={handleChange}
           onKeyDown={handleKeyDown}
           value={value}
+          autoFocus
         />
       ) : null}
       <div className="flex justify-around w-full">

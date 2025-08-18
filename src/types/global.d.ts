@@ -1,4 +1,4 @@
-import type { Dispatch, ReactNode, SetStateAction } from "react";
+import type { ReactNode } from "react";
 
 declare global {
   interface AuthUser {
@@ -11,16 +11,27 @@ declare global {
     username: string;
     email: string;
     password: string;
-    passwordConfirmation: string;
   }
 
   interface AuthContext {
-    authUser: AuthUser | null;
-    setAuthUser: SetStateAction<Dispatch<AuthUser | null>>;
+    authUser: AuthUser | undefined | null;
   }
 
   interface AuthProviderProps {
     children: ReactNode;
+  }
+
+  interface NewGame {
+    userId: string;
+  }
+
+  interface GameDataContext {
+    currentGame: Game;
+  }
+
+  interface GameDataProviderProps {
+    children: ReactNode;
+    currentGame: Game;
   }
 
   interface Game {
@@ -64,6 +75,7 @@ declare global {
 
   interface NewGuess {
     value: string;
+    gameId?: string;
   }
 
   interface CodeMakerProps {

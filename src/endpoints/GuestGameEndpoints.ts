@@ -1,4 +1,4 @@
-const API = "http://localhost:3000";
+const API = import.meta.env.VITE_BACKEND_URL;
 import axios from "axios";
 
 export default {
@@ -7,7 +7,7 @@ export default {
       const sessionId = localStorage.getItem("sessionId");
       const data = (
         await axios.get<ResponseEntity<Game>>(
-          API + "/api/v1/guest_games/find_or_create/" + sessionId
+          API + "/api/v1/guest_games/find/" + sessionId
         )
       ).data.data;
       if (data.userId) localStorage.setItem("sessionId", data.userId);

@@ -1,8 +1,6 @@
 import { createElement, type FC } from "react";
 
 const PegContainer: FC<PegContainerProps> = ({ guess }) => {
-  console.log(guess.locationMatch, guess.numberMatch);
-
   const blackPegs = Array.from({ length: guess.locationMatch }, (_, i) =>
     createElement("div", {
       key: i,
@@ -19,7 +17,7 @@ const PegContainer: FC<PegContainerProps> = ({ guess }) => {
   );
 
   return (
-    <div className="grid grid-cols-2 grid-rows-2 place-items-center w-10 h-10 ">
+    <div className="grid grid-cols-2 grid-rows-2 place-items-center w-10 h-10 border-t p-2">
       {[...blackPegs, ...whitePegs]}
     </div>
   );
