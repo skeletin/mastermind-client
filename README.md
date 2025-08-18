@@ -1,69 +1,244 @@
-# React + TypeScript + Vite
+# Mastermind Client
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React TypeScript frontend for the Mastermind game challenge. This client provides an intuitive web interface for playing the classic Mastermind game where players attempt to guess a 4-digit code within 10 attempts.
 
-Currently, two official plugins are available:
+## 🎯 Challenge Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project implements the frontend for the Mastermind game as specified in the LinkedIn Backend Apprentice challenge:
 
-## Expanding the ESLint configuration
+- **Game Interface**: Interactive web-based game board with number input
+- **Attempt Tracking**: Clear indication of remaining attempts
+- **User Authentication**: Registration and login functionality
+- **Guest Mode**: Play without creating an account
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🏗️ Architecture
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **Framework**: React 19.1.1 with TypeScript
+- **Build Tool**: Vite 7.1.2
+- **Styling**: Tailwind CSS 4.1.12
+- **State Management**: React Context API + TanStack Query
+- **Routing**: React Router 7.8.0
+- **HTTP Client**: Axios
+- **Animations**: Motion (Framer Motion)
+- **Package Management**: npm
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## 🚀 Features
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Game Interface
+
+- **Interactive Game Board**: Number input for 4-digit guesses (0-7)
+- **Visual Feedback**: Number-based feedback indicators
+- **Real-time Updates**: Immediate feedback after each guess
+- **Responsive Design**: Works on desktop and mobile devices
+
+### User Experience
+
+- **Guest Mode**: Play immediately without registration
+- **User Authentication**: Secure login and registration
+- **Attempt Counter**: Clear display of remaining attempts
+- **Win/Loss Detection**: Automatic game state updates
+
+### Technical Features
+
+- **TypeScript**: Full type safety throughout the application
+- **Modern React**: Uses latest React features and patterns
+- **Optimized Performance**: Efficient re-renders and state management
+- **Error Handling**: Graceful error handling and user feedback
+
+## 📋 Prerequisites
+
+- Node.js 18+
+- npm or yarn
+- Modern web browser
+
+## 🛠️ Installation
+
+1. **Clone the repository**
+
+   ```bash
+   git clone <repository-url>
+   cd mastermind-client
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. **Environment configuration**
+
+   ```bash
+   # Create environment file (if needed)
+   cp .env.example .env
+   # Edit .env with your API configuration
+   ```
+
+4. **Start the development server**
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+The application will be available at `http://localhost:5173`
+
+## 🏃‍♂️ Available Scripts
+
+```bash
+# Development
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run preview      # Preview production build
+npm run lint         # Run ESLint
+
+# TypeScript
+npm run type-check   # Check TypeScript types
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🎮 How to Play
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Game Rules
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+1. **Objective**: Guess the 4-digit code within 10 attempts
+2. **Code Generation**: Computer randomly selects 4 digits (0-7)
+3. **Guessing**: Enter 4 digits (0-7) to make your guess
+4. **Feedback**: After each guess, you'll receive feedback:
+   - **Correct position**: Number of digits in correct position
+   - **Correct number**: Number of correct digits in wrong position
+
+### Interface Guide
+
+- **Input Field**: Enter your 4-digit guess (digits 0-7)
+- **Submit Button**: Submit your guess
+- **Feedback Display**: View feedback for your guess
+- **Attempt Counter**: See how many attempts remain
+
+## 🏗️ Project Structure
+
 ```
+src/
+├── components/
+│   ├── contexts/           # React Context providers
+│   ├── features/           # Feature-based components
+│   │   ├── Game/          # Game-related components
+│   │   ├── Home/          # Home page components
+│   │   └── Registrations/ # Auth components
+│   ├── layouts/           # Layout components
+│   ├── providers/         # Context providers
+│   ├── svgs/             # SVG components
+│   └── utility/          # Utility components
+├── contract/             # TypeScript interfaces
+├── endpoints/            # API endpoint definitions
+├── hooks/               # Custom React hooks
+├── types/               # Global type definitions
+└── main.tsx            # Application entry point
+```
+
+## 🔧 Configuration
+
+### Environment Variables
+
+Create a `.env` file in the root directory:
+
+```env
+VITE_API_BASE_URL=http://localhost:3000/api/v1
+```
+
+### API Configuration
+
+The client is configured to communicate with the Mastermind API backend. Ensure the API server is running and accessible.
+
+## 🎨 Styling
+
+The application uses Tailwind CSS for styling with a custom design system:
+
+- **Color Palette**: Consistent color scheme for pegs and UI elements
+- **Typography**: Modern, readable fonts
+- **Spacing**: Consistent spacing system
+- **Responsive**: Mobile-first responsive design
+- **Animations**: Smooth transitions and micro-interactions
+
+## 🧪 Development
+
+### Code Quality
+
+- **ESLint**: Code linting and formatting
+- **TypeScript**: Static type checking
+- **Prettier**: Code formatting (if configured)
+
+### Best Practices
+
+- **Component Structure**: Feature-based organization
+- **State Management**: Context API for global state
+- **API Integration**: TanStack Query for data fetching
+- **Error Boundaries**: Graceful error handling
+
+## 🚀 Deployment
+
+### Build for Production
+
+```bash
+npm run build
+```
+
+### Deploy Options
+
+- **Vercel**: Zero-config deployment
+- **Netlify**: Drag-and-drop deployment
+- **GitHub Pages**: Static site hosting
+- **Docker**: Containerized deployment
+
+### Environment Setup
+
+Ensure your production environment has the correct API endpoint configured.
+
+## 🔒 Security
+
+- **HTTPS**: Secure communication with API
+- **Input Validation**: Client-side validation
+- **XSS Protection**: React's built-in XSS protection
+- **CORS**: Proper CORS configuration with backend
+
+## 🎯 Performance
+
+- **Code Splitting**: Automatic route-based code splitting
+- **Lazy Loading**: Components loaded on demand
+- **Optimized Assets**: Compressed images and optimized bundles
+- **Caching**: Efficient caching strategies
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Run linting and type checking
+6. Submit a pull request
+
+## 📄 License
+
+This project is part of the LinkedIn Backend Apprentice challenge.
+
+## 🎮 Game Features
+
+### Core Gameplay
+
+- **4-digit code guessing** with digits 0-7
+- **10 attempts maximum** to solve the puzzle
+- **Real-time feedback** after each guess
+- **Number-based feedback system**
+
+### User Interface
+
+- **Simple number input** for entering guesses
+- **Clear feedback display** for correct/incorrect guesses
+- **Remaining attempts counter** prominently displayed
+- **Responsive design** for all device sizes
+
+### Additional Features
+
+- **Guest mode** for immediate play
+- **User accounts** for game tracking

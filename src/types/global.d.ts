@@ -1,4 +1,4 @@
-import type { Dispatch, ReactNode, SetStateAction } from "react";
+import type { ReactNode } from "react";
 
 declare global {
   interface AuthUser {
@@ -11,16 +11,75 @@ declare global {
     username: string;
     email: string;
     password: string;
-    passwordConfirmation: string;
   }
 
   interface AuthContext {
-    authUser: AuthUser | null;
-    setAuthUser: SetStateAction<Dispatch<AuthUser | null>>;
+    authUser: AuthUser | undefined | null;
   }
 
   interface AuthProviderProps {
     children: ReactNode;
+  }
+
+  interface NewGame {
+    userId: string;
+  }
+
+  interface GameDataContext {
+    currentGame: Game;
+  }
+
+  interface GameDataProviderProps {
+    children: ReactNode;
+    currentGame: Game;
+  }
+
+  interface Game {
+    id: string;
+    status: "in_progress" | "win" | "loss";
+    userId: "";
+    solution: string | null;
+    guesses: Guess[];
+  }
+
+  interface Guess {
+    id: string;
+    locationMatch: 0 | 1 | 2 | 3 | 4;
+    numberMatch: 0 | 1 | 2 | 3 | 4;
+    value: string;
+  }
+
+  interface SlotContainerProps {
+    guesses: Guess[];
+  }
+
+  interface SlotProps {
+    guess: Guess;
+    currentGuess: number;
+    rowNumber: number;
+  }
+
+  interface DigitProps {
+    digit: string;
+    rowNumber: number;
+    activeRow?: number;
+  }
+
+  interface Pegs {
+    guesses: Guess[];
+  }
+
+  interface PegContainerProps {
+    guess: Guess;
+  }
+
+  interface NewGuess {
+    value: string;
+    gameId?: string;
+  }
+
+  interface CodeMakerProps {
+    game: Game;
   }
 }
 
