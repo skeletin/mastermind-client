@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { Dispatch, ReactNode, SetStateAction } from "react";
 
 declare global {
   interface AuthUser {
@@ -85,6 +85,10 @@ declare global {
 
   interface CodeMakerProps {
     game: Game;
+  }
+
+  interface NavMenuProps {
+    setShowMenu: Dispatch<SetStateAction<boolean>>;
   }
 }
 

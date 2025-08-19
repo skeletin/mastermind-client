@@ -1,9 +1,10 @@
 import type { FC } from "react";
 import Slot from "./Slot";
+import { motion } from "motion/react";
 
 const SlotContainer: FC<SlotContainerProps> = ({ guesses }) => {
   return (
-    <div className="relative flex flex-col-reverse space-y-2 w-full">
+    <motion.div className="relative flex flex-col-reverse select-none">
       {Array.from({ length: 10 }, (_, i) => (
         <Slot
           key={i}
@@ -12,7 +13,7 @@ const SlotContainer: FC<SlotContainerProps> = ({ guesses }) => {
           rowNumber={i + 1}
         />
       ))}
-    </div>
+    </motion.div>
   );
 };
 

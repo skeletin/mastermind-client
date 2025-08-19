@@ -5,6 +5,7 @@ import Game from "./components/features/Game/Game";
 import Login from "./components/features/Registrations/Login";
 import SignUp from "./components/features/Registrations/SignUp";
 import GuestOnly from "./components/utility/GuestOnly";
+import Rules from "./components/features/Rules/Rules";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<AppLayout />}>
           <Route path="/" index element={<Home />} />
           <Route path="/game" index element={<Game />} />
+          <Route path="/rules" index element={<Rules />} />
           <Route
             path="/login"
             element={
