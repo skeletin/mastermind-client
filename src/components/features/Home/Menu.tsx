@@ -31,26 +31,17 @@ const Menu = () => {
     <div className="flex flex-col space-y-2 magz items-center">
       <button
         onClick={playGame}
-        className="border rounded-full p-1 w-60 text-gray-300 cursor-pointer"
+        className="border rounded-full p-1 w-60 text-gray-300 cursor-pointer hover:bg-gray-100 hover:text-[#10172a] hover:scale-110 transition duration-400"
       >
         Play Game
       </button>
-      {!authUser && (
-        <>
-          <Link
-            to="/register"
-            className="text-center border text-sm rounded-full p-1 w-40 text-gray-300 cursor-pointer"
-          >
-            Sign up
-          </Link>
-          <Link
-            to="/login"
-            className="text-center border text-sm  rounded-full p-1 w-40 text-gray-300 cursor-pointer"
-          >
-            Log in
-          </Link>
-        </>
-      )}
+
+      <Link
+        to="/rules"
+        className="mt-2 text-center border text-sm rounded-full p-1 text-gray-300 cursor-pointer hover:bg-gray-100 hover:text-[#10172a] hover:scale-110 transition duration-400 w-52"
+      >
+        How to Play
+      </Link>
     </div>
   );
 };

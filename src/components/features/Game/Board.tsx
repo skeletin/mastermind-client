@@ -24,15 +24,15 @@ const Board = () => {
     const guesses = data.guesses;
 
     return (
-      <GameDataProvider currentGame={data}>
-        <div className="flex flex-col space-y-4">
-          <CodeMaker game={data} />
-          <div className="grid grid-cols-[5fr_1fr] w-full">
+      <div>
+        <CodeMaker game={data} />
+        <GameDataProvider currentGame={data}>
+          <div className="grid grid-cols-[20fr_1fr] max-w-[20rem]">
             <SlotContainer guesses={guesses} />
             <Pegs guesses={guesses} />
           </div>
-        </div>
-      </GameDataProvider>
+        </GameDataProvider>
+      </div>
     );
   }
 };
