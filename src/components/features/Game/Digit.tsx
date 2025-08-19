@@ -1,7 +1,7 @@
-import type { FC } from "react";
+import { memo, type FC } from "react";
 import { AnimatePresence, motion } from "motion/react";
 
-const Digit: FC<DigitProps> = ({ digit, rowNumber, activeRow }) => {
+const Digit: FC<DigitProps> = memo(({ digit, rowNumber, activeRow }) => {
   return (
     <div className="w-10 h-10">
       <div
@@ -11,22 +11,12 @@ const Digit: FC<DigitProps> = ({ digit, rowNumber, activeRow }) => {
             : "border-slate-700"
         } `}
       >
-        {" "}
         <AnimatePresence>
-          {digit && (
-            <motion.span
-              initial={{ x: -12, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: 12, opacity: 0 }}
-              transition={{ type: "spring", stiffness: 100 }}
-            >
-              {digit}
-            </motion.span>
-          )}{" "}
+          {digit && <motion.span>{digit}</motion.span>}
         </AnimatePresence>
       </div>
     </div>
   );
-};
+});
 
 export default Digit;

@@ -1,15 +1,17 @@
 import { type FC } from "react";
-import { motion } from "motion/react";
 
 const PegContainer: FC<PegContainerProps> = ({ guess }) => {
-  const yellowPegs = Array.from({ length: guess.locationMatch }, (_, i) => (
-    <div key={i} className="h-3/4 w-3/4  rounded-full bg-yellow-300 "></div>
+  const yellowPegs = Array.from({ length: guess.locationMatch }, () => (
+    <div
+      key={crypto.randomUUID()}
+      className="h-3/4 w-3/4  rounded-full bg-yellow-300 "
+    ></div>
   ));
 
-  const whitePegs = Array.from({ length: guess.numberMatch }, (_, i) => (
+  const whitePegs = Array.from({ length: guess.numberMatch }, () => (
     <div
-      key={i}
-      className="h-3/4 w-3/4  rounded-full bg-white border-black "
+      key={crypto.randomUUID()}
+      className="h-3/4 w-3/4  rounded-full bg-white border-black"
     ></div>
   ));
 
