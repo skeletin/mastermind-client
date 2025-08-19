@@ -1,4 +1,4 @@
-import { useContext, useState, type FC } from "react";
+import { useContext, useEffect, useState, type FC } from "react";
 import Digit from "./Digit";
 import { useMutation } from "@tanstack/react-query";
 import GuestGameEndpoints from "../../../endpoints/GuestGameEndpoints";
@@ -14,13 +14,12 @@ const Slot: FC<SlotProps> = ({ guess, currentGuess, rowNumber }) => {
   const [value, setValue] = useState("");
   const queryClient = useQueryClient();
   const { currentGame } = useContext(GameDataContext);
-
   const loggedIn = !!authUser;
+  const gameOver = currentGame.guesses.length === 10;
 
   const { mutate: makeGuess } = useMutation({
     mutationFn: GuestGameEndpoints.makeGuess,
-    onSuccess: (data) => {
-      console.log(data);
+    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["game", authUser?.id ?? "guest"],
       });
@@ -29,13 +28,21 @@ const Slot: FC<SlotProps> = ({ guess, currentGuess, rowNumber }) => {
 
   const { mutate: makeAuthGuess } = useMutation({
     mutationFn: GuessEndpoints.makeGuess,
-    onSuccess: (data) => {
-      console.log(data);
+    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["game", authUser?.id ?? "guest"],
       });
     },
   });
+
+  const { mutate: endGame } = useMutation({
+    mutationFn: GuestGameEndpoints.endGame,
+    onSuccess: () => {},
+  });
+
+  useEffect(() => {
+    if (gameOver) endGame();
+  }, [gameOver, endGame]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (/[0-7]/.test(e.key) && value.length < 4) {
@@ -69,11 +76,11 @@ const Slot: FC<SlotProps> = ({ guess, currentGuess, rowNumber }) => {
     <>
       {currentGuess == rowNumber ? (
         <input
+          defaultValue={value}
           maxLength={4}
-          className="absolute text-black -top-30 left-10  text-whit focus:outline-none border border-red-500 cursor-default"
+          className="absolute text-black -top-30 left-10  text-whit focus:outline-none border border-red-500 cursor-default opacity-0"
           max={4}
           onKeyDown={handleKeyDown}
-          value={value}
           autoFocus
         />
       ) : null}

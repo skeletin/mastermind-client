@@ -34,4 +34,18 @@ export default {
       return null; // ✅ ensures a value is always returned
     }
   },
+
+  async endGame(): Promise<boolean | null> {
+    try {
+      const sessionId = localStorage.getItem("sessionId");
+      return (
+        await axios.delete<ResponseEntity<boolean>>(
+          API + "/api/v1/guest_games/" + sessionId
+        )
+      ).data.data;
+    } catch (error) {
+      console.error("Error posting data:", error);
+      return null; // ✅ ensures a value is always returned
+    }
+  },
 };
