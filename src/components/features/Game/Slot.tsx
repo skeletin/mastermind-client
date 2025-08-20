@@ -35,14 +35,14 @@ const Slot: FC<SlotProps> = ({ guess, currentGuess, rowNumber }) => {
     },
   });
 
-  const { mutate: endGame } = useMutation({
+  const { mutate: endGuestGame } = useMutation({
     mutationFn: GuestGameEndpoints.endGame,
     onSuccess: () => {},
   });
 
   useEffect(() => {
-    if (gameOver) endGame();
-  }, [gameOver, endGame]);
+    if (gameOver && !loggedIn) endGuestGame();
+  }, [gameOver, loggedIn, endGuestGame]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (/[0-7]/.test(e.key) && value.length < 4) {
