@@ -33,6 +33,8 @@ const CodeMaker: FC<CodeMakerProps> = ({ game }) => {
     else newGuestGame();
   };
 
+  console.log(authUser);
+
   return (
     <motion.div className="flex flex-col items-center mb-4 space-y-4">
       <div className="text-white text-3xl h-10">

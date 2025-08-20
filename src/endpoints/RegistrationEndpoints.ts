@@ -44,7 +44,8 @@ export default {
 
       return data;
     } catch (error) {
-      if (error.status === 403) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      if ((error as any).status === 403) {
         console.error("Not Authenticated");
       }
       return null; // ✅ ensures a value is always returned
