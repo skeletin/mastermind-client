@@ -153,7 +153,7 @@ src/
 Create a `.env` file in the root directory:
 
 ```env
-VITE_API_BASE_URL=https://bdvadxydn6.execute-api.us-east-2.amazonaws.com
+VITE_BACKEND_URL=https://bdvadxydn6.execute-api.us-east-2.amazonaws.com
 ```
 
 **Note**: This URL points to the AWS API Gateway which acts as a proxy between the frontend and the Mastermind API backend deployed on Railway.
