@@ -1,6 +1,14 @@
+import { useQueryClient } from "@tanstack/react-query";
 import type { FC } from "react";
 
 const NavMenu: FC<NavMenuProps> = ({ setShowMenu }) => {
+  const queryClient = useQueryClient();
+
+  const logOut = () => {
+    localStorage.removeItem("token");
+    queryClient.invalidateQueries({ queryKey: ["auth-user"] });
+  };
+
   return (
     <div>
       <button
@@ -11,7 +19,10 @@ const NavMenu: FC<NavMenuProps> = ({ setShowMenu }) => {
         <button className="text-gray-200 border-b border-gray-700 p-3 w-full text-left cursor-pointer hover:bg-gray-800">
           View Game History
         </button>
-        <button className="text-red-300 border-b border-gray-700 p-3 w-full text-left cursor-pointer hover:bg-gray-800">
+        <button
+          onClick={logOut}
+          className="text-red-300 border-b border-gray-700 p-3 w-full text-left cursor-pointer hover:bg-gray-800"
+        >
           Log out
         </button>
       </div>

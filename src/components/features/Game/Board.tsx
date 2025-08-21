@@ -1,38 +1,25 @@
-import { useQuery } from "@tanstack/react-query";
 import SlotContainer from "./SlotContainer";
 import Pegs from "./Pegs";
 import CodeMaker from "./CodeMaker";
-import useAuth from "../../../hooks/useAuth";
-import GuestGameEndpoints from "../../../endpoints/GuestGameEndpoints";
-import GameEndpoints from "../../../endpoints/GameEndpoints";
-import GameDataProvider from "../../providers/GameDataProvider";
+import { BarLoader } from "react-spinners";
+import { useContext } from "react";
+import GameDataContext from "../../contexts/gameDataContext";
 
 const Board = () => {
-  const { authUser } = useAuth();
-  const { data, isLoading } = useQuery({
-    queryKey: ["game", authUser?.id ?? "guest"],
-    queryFn: () =>
-      authUser
-        ? GameEndpoints.getGame(authUser.id)
-        : GuestGameEndpoints.getOrCreateGame(),
-    enabled: authUser !== undefined, // don't run until we *know* authUser
-  });
+  const { currentGame, isLoading } = useContext(GameDataContext);
 
-  if (isLoading) return <div>"loading...</div>;
-
-  if (data) {
-    const guesses = data.guesses;
+  if (isLoading) return <BarLoader color="oklch(92.8% 0.006 264.531)" />;
+  if (currentGame) {
+    const guesses = currentGame.guesses;
 
     return (
-      <div>
-        <CodeMaker game={data} />
-        <GameDataProvider currentGame={data}>
-          <div className="grid grid-cols-[20fr_1fr] max-w-[20rem]">
-            <SlotContainer guesses={guesses} />
-            <Pegs guesses={guesses} />
-          </div>
-        </GameDataProvider>
-      </div>
+      <>
+        <CodeMaker game={currentGame} />
+        <div className="grid grid-cols-[20fr_1fr] max-w-[20rem]">
+          <SlotContainer guesses={guesses} />
+          <Pegs guesses={guesses} />
+        </div>
+      </>
     );
   }
 };

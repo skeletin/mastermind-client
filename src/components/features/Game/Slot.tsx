@@ -13,9 +13,9 @@ const Slot: FC<SlotProps> = ({ guess, currentGuess, rowNumber }) => {
   const { authUser } = useAuth();
   const [value, setValue] = useState("");
   const queryClient = useQueryClient();
-  const { currentGame } = useContext(GameDataContext);
+  const { currentGame, audio } = useContext(GameDataContext);
   const loggedIn = !!authUser;
-  const gameOver = currentGame.guesses.length === 10;
+  const { status } = currentGame ?? {};
 
   const { mutate: makeGuess } = useMutation({
     mutationFn: GuestGameEndpoints.makeGuess,
@@ -26,6 +26,10 @@ const Slot: FC<SlotProps> = ({ guess, currentGuess, rowNumber }) => {
     },
   });
 
+  useEffect(() => {
+    audio.play();
+  }, [audio, status]);
+
   const { mutate: makeAuthGuess } = useMutation({
     mutationFn: GuessEndpoints.makeGuess,
     onSuccess: () => {
@@ -35,22 +39,13 @@ const Slot: FC<SlotProps> = ({ guess, currentGuess, rowNumber }) => {
     },
   });
 
-  const { mutate: endGuestGame } = useMutation({
-    mutationFn: GuestGameEndpoints.endGame,
-    onSuccess: () => {},
-  });
-
-  useEffect(() => {
-    if (gameOver && !loggedIn) endGuestGame();
-  }, [gameOver, loggedIn, endGuestGame]);
-
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (/[0-7]/.test(e.key) && value.length < 4) {
       setValue((prev) => prev + e.key); // append digit
     } else if (e.key === "Backspace") {
       setValue((prev) => prev.slice(0, -1)); // remove last character
     } else if (e.key === "Enter" && value.length === 4) {
-      if (loggedIn) makeAuthGuess({ value, gameId: currentGame.id });
+      if (loggedIn) makeAuthGuess({ value, gameId: currentGame?.id });
       else makeGuess({ value });
     } else {
       e.preventDefault(); // block other keys
@@ -85,7 +80,7 @@ const Slot: FC<SlotProps> = ({ guess, currentGuess, rowNumber }) => {
         />
       ) : null}
       <motion.div className="relative flex items-center justify-around w-full mb-1">
-        {rowNumber == currentGuess && currentGame.status == "in_progress" && (
+        {rowNumber == currentGuess && currentGame?.status == "in_progress" && (
           <motion.div
             initial={{
               opacity: 0,

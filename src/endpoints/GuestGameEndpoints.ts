@@ -38,6 +38,7 @@ export default {
   async endGame(): Promise<boolean | null> {
     try {
       const sessionId = localStorage.getItem("sessionId");
+      localStorage.removeItem("sessionId");
       return (
         await axios.delete<ResponseEntity<boolean>>(
           API + "/api/v1/guest_games/" + sessionId
