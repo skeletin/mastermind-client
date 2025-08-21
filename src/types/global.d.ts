@@ -31,12 +31,13 @@ declare global {
   }
 
   interface GameDataContext {
-    currentGame: Game;
+    currentGame: Game | null | undefined;
+    isLoading: boolean;
+    audio: HTMLAudioElement;
   }
 
   interface GameDataProviderProps {
     children: ReactNode;
-    currentGame: Game;
   }
 
   interface Game {

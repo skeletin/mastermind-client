@@ -28,12 +28,17 @@ const CodeMaker: FC<CodeMakerProps> = ({ game }) => {
     },
   });
 
+  const { mutate: endGame } = useMutation({
+    mutationFn: GuestGameEndpoints.endGame,
+  });
+
   const startNewGame = () => {
     if (authUser) newAuthGame({ userId: authUser.id });
-    else newGuestGame();
+    else {
+      endGame();
+      newGuestGame();
+    }
   };
-
-  console.log(authUser);
 
   return (
     <motion.div className="flex flex-col items-center mb-4 space-y-4">
@@ -43,7 +48,7 @@ const CodeMaker: FC<CodeMakerProps> = ({ game }) => {
       {status != "in_progress" ? (
         <motion.button
           onClick={startNewGame}
-          className="text-white rounded-full  shadow shadow-blue-600 bg-blue-600 px-8 magz tracking-wider text-sm h-10 cursor-pointer"
+          className="text-white rounded-full  shadow shadow-blue-600 bg-blue-600 px-8 magz tracking-wider text-sm h-10 cursor-pointer hover:bg-blue-700 hover:scale-105 transition"
         >
           Play Again?
         </motion.button>

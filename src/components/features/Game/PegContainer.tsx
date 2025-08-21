@@ -1,4 +1,5 @@
 import { type FC } from "react";
+import { motion } from "motion/react";
 
 const PegContainer: FC<PegContainerProps> = ({ guess }) => {
   const yellowPegs = Array.from({ length: guess.locationMatch }, () => (
@@ -16,9 +17,9 @@ const PegContainer: FC<PegContainerProps> = ({ guess }) => {
   ));
 
   return (
-    <div className="grid grid-cols-2 grid-rows-2 place-items-center w-10 h-10 border-t border-gray-400 p-2">
+    <motion.div className="grid grid-cols-2 grid-rows-2 place-items-center w-10 h-10 border-t border-gray-400 p-2">
       {[...yellowPegs, ...whitePegs]}
-    </div>
+    </motion.div>
   );
 };
 

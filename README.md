@@ -10,10 +10,11 @@ This project implements the frontend for the Mastermind game as specified in the
 - **Attempt Tracking**: Clear indication of remaining attempts
 - **User Authentication**: Registration and login functionality
 - **Guest Mode**: Play without creating an account
+- **API Integration**: Communicates with AWS API Gateway which proxies to Railway-deployed backend
 
 ## 🏗️ Architecture
 
-- **Framework**: React 19.1.1 with TypeScript
+- **Frontend**: React 19.1.1 with TypeScript
 - **Build Tool**: Vite 7.1.2
 - **Styling**: Tailwind CSS 4.1.12
 - **State Management**: React Context API + TanStack Query
@@ -21,6 +22,8 @@ This project implements the frontend for the Mastermind game as specified in the
 - **HTTP Client**: Axios
 - **Animations**: Motion (Framer Motion)
 - **Package Management**: npm
+- **API Gateway**: AWS API Gateway (us-east-2)
+- **Backend**: Mastermind API deployed on Railway
 
 ## 🚀 Features
 
@@ -71,9 +74,15 @@ This project implements the frontend for the Mastermind game as specified in the
 3. **Environment configuration**
 
    ```bash
-   # Create environment file (if needed)
+   # Create environment file
    cp .env.example .env
-   # Edit .env with your API configuration
+   # Edit .env with the API Gateway URL
+   ```
+
+   Add the following to your `.env` file:
+
+   ```env
+   VITE_API_BASE_URL=https://bdvadxydn6.execute-api.us-east-2.amazonaws.com
    ```
 
 4. **Start the development server**
@@ -144,12 +153,21 @@ src/
 Create a `.env` file in the root directory:
 
 ```env
-VITE_API_BASE_URL=http://localhost:3000/api/v1
+VITE_API_BASE_URL=https://bdvadxydn6.execute-api.us-east-2.amazonaws.com
 ```
+
+**Note**: This URL points to the AWS API Gateway which acts as a proxy between the frontend and the Mastermind API backend deployed on Railway.
+
+**For Local Development**: When running the frontend locally on `localhost:5173`, ensure that this origin is added to the allowed origins in your API Gateway CORS configuration to enable communication between your local frontend and the remote backend.
 
 ### API Configuration
 
-The client is configured to communicate with the Mastermind API backend. Ensure the API server is running and accessible.
+The client communicates with the Mastermind API through AWS API Gateway. The API Gateway acts as a proxy, forwarding requests to the Mastermind API backend deployed on Railway. This architecture provides:
+
+- **Scalability**: API Gateway handles traffic distribution
+- **Security**: Centralized request handling and validation
+- **Reliability**: Railway provides robust backend hosting
+- **Performance**: Optimized routing through AWS infrastructure
 
 ## 🎨 Styling
 
@@ -200,7 +218,7 @@ Ensure your production environment has the correct API endpoint configured.
 - **HTTPS**: Secure communication with API
 - **Input Validation**: Client-side validation
 - **XSS Protection**: React's built-in XSS protection
-- **CORS**: Proper CORS configuration with backend
+- **CORS**: Proper CORS configuration with backend (including localhost:5173 for local development)
 
 ## 🎯 Performance
 

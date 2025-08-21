@@ -36,4 +36,22 @@ export default {
       return null; // ✅ ensures a value is always returned
     }
   },
+
+  async quitGame(gameId: string | undefined): Promise<Game | null> {
+    try {
+      return (
+        await axios.delete<ResponseEntity<Game>>(
+          API + "/api/v1/games/" + gameId,
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
+        )
+      ).data.data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      return null; // ✅ ensures a value is always returned
+    }
+  },
 };
