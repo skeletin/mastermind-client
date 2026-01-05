@@ -1,6 +1,6 @@
 # Mastermind Client
 
-A modern React TypeScript frontend for the Mastermind game challenge. This client provides an intuitive web interface for playing the classic Mastermind game where players attempt to guess a 4-digit code within 10 attempts.
+A modern React TypeScript frontend for the Mastermind game challenge. This client provides an intuitive web interface for playing the classic Mastermind game where players attempt to guess a 4-digit code within 10 attempts!
 
 ## 🎯 Challenge Overview
 
